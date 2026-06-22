@@ -1,0 +1,165 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Видеоплеер</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="fonts/video-svgrepo-com.svg" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+      .vp-player {
+        width: 800px;
+        height: 600px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        background: #000;
+        font-family: 'Rubik', Arial, Helvetica, sans-serif;
+      }
+      /* Ensure elements with hidden attribute are not shown (override button display) */
+      [hidden] { display: none !important; }
+      .js-video-container {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+      }
+      /* Controls are absolute overlay to match designer mockup coordinates */
+      .vp-controls {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 12px;
+        box-sizing: border-box;
+        background: rgba(0,0,0,0.65);
+        z-index: 100;
+      }
+      .vp-controls-left,
+      .vp-controls-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .vp-controls-right {
+        gap: 8px;
+      }
+      .vp-button {
+        border: none;
+        cursor: pointer;
+        background: transparent;
+        width: 36px;
+        height: 36px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+      }
+      .vp-icon {
+        color: white;
+        font-size: 18px;
+        line-height: 1;
+        display: inline-block;
+      }
+      .vp-time {
+        color: white;
+        font-size: 13px;
+        margin: 0 8px;
+        white-space: nowrap;
+      }
+      .space {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        padding: 0 6px;
+      }
+      .js-progress {
+        width: 100%;
+        height: 6px;
+        background: rgba(255,255,255,0.12);
+        cursor: pointer;
+        position: relative;
+        border-radius: 3px;
+        overflow: visible;
+      }
+      .js-progress-slider {
+        position: relative;
+        height: 100%;
+        background: #d9534f;
+        width: 0%;
+      }
+      .progress-knob {
+        position: absolute;
+        top: 50%;
+        left: 100%;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #ff2d55;
+        border: 4px solid #ffffff;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 10;
+        display: block;
+        box-sizing: border-box;
+        opacity: 0;
+        transition: opacity 0.3s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+      }
+      .js-progress:hover .progress-knob {
+        opacity: 1;
+      }
+      /* Overlay time block shown when video plays */
+    </style>
+  </head>
+  <body>
+    <div id="player" class="vp-player">    
+        
+          <div class="js-video-container"></div>
+          <div class="vp-controls">
+            <div class="vp-controls-left">
+              <button class="js-play-button vp-button">
+                <i class="fa fa-play vp-icon" aria-hidden="true"></i>
+              </button>
+              <button class="js-pause-button vp-button" hidden>
+                <i class="fa fa-pause vp-icon" aria-hidden="true"></i>
+              </button>
+              <button class="js-volume-button vp-button">
+                <i class="fa fa-volume-up vp-icon" aria-hidden="true"></i>
+              </button>
+              <button class="js-mute-button vp-button" hidden>
+                <i class="fa fa-volume-off vp-icon" aria-hidden="true"></i>
+              </button>
+              <span class="js-current-time vp-time">00:00</span>
+            </div>
+            <div class="space">
+              <div class="js-progress">
+                <div class="js-progress-slider">
+                  <div class="js-progress-knob progress-knob" aria-hidden="true"></div>
+                </div>
+              </div>
+            </div>
+            <div class="vp-controls-right">
+              <span class="js-duration vp-time">00:00</span>
+              <button class="js-fullscreen-button vp-button">
+                <i class="fa fa-expand vp-icon" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+    </div>
+    <script src="http://localhost:35729/livereload.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://unpkg.com/playable@2.10.3/dist/statics/playable.bundle.min.js"></script>
+    <script src="player.js"></script>
+    <script type="text/javascript">
+      createPlayer({elementId: 'player'});
+    </script>
+  </body>
+</html>
